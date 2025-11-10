@@ -6,13 +6,13 @@ export default function AddStudent() {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
   
   async function handleSubmit(e:React.FormEvent) {
     try{
       e.preventDefault()
       const response= await axiosClient.post(
-        '/student/add',{
+        '/student/add',
+        {
           Name:name,
           Email:email
         }
@@ -21,8 +21,12 @@ export default function AddStudent() {
       setEmail('')
       console.log(response)
     }
-    catch(err:any){
-      console.log(err)
+    catch(error:any){
+      if(error.response)
+      {
+        alert(error.response.data.detail)
+      }
+      console.log(error)
     }
   }
 
@@ -51,11 +55,8 @@ export default function AddStudent() {
           required
         />
       </div>
-
       <button type="submit">Add</button>
     </form>
-
-    {message && <p className="message">{message}</p>}
   </div>
   )
 }
