@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./addstudent.css"
-import axiosClient from "../axiosClient";
+import axiosClient from "../../axiosClient";
+import { Link } from "react-router";
 
 export default function AddStudent() {
 
@@ -17,16 +18,17 @@ export default function AddStudent() {
           Email:email
         }
       )
-      setName('')
-      setEmail('')
-      console.log(response)
+      if(response.status==200)
+      {
+        setName('')
+        setEmail('')
+      }
     }
     catch(error:any){
       if(error.response)
       {
         alert(error.response.data.detail)
       }
-      console.log(error)
     }
   }
 
@@ -57,6 +59,7 @@ export default function AddStudent() {
       </div>
       <button type="submit">Add</button>
     </form>
+    <Link to='/'>View</Link>
   </div>
   )
 }
